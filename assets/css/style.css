@@ -602,6 +602,32 @@ body.loaded{
     color: var(--theme-color);
 }
 
+/* Style for the in-place edit input */
+.edit-input {
+  display: none; /* Initially hide the input */
+  width: 80%; /* Adjust the width as needed */
+  padding: 10px; /* Add padding for spacing */
+  border: 2px solid #007bff; /* Add a border with a color */
+  border-radius: 5px; /* Add rounded corners */
+  margin-top: 8px; /* Adjust the top margin as needed */
+  font-size: 16px; /* Adjust the font size as needed */
+  outline: none; /* Remove the default input outline */
+  transition: border-color 0.3s, box-shadow 0.3s; /* Add smooth transitions */
+}
+
+/* Style when the input is in focus */
+.edit-input:focus {
+  border-color: #ff5733; /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(255, 87, 51, 0.5); /* Add a subtle shadow on focus */
+}
+
+/* Hover effect for the input */
+.edit-input:hover {
+  border-color: #0056b3; /* Change border color on hover */
+}
+
+  
+
 .modal-btn{
     width: 100%;
     min-height: 30px;

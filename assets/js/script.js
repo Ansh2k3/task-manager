@@ -146,15 +146,44 @@ const taskItemNode = function (taskText) {
 
     <p class="item-text">${taskText}</p>
 
+    <button class="item-action-btn" aria-label="Edit task" data-task-edit>
+      <ion-icon name="pencil-outline" aria-hidden="true"></ion-icon>
+    </button>
+
     <button class="item-action-btn" aria-label="Remove task" data-task-remove>
       <ion-icon name="trash-outline" aria-hidden="true"></ion-icon>
     </button>
+
+
+    <input type="text" class="edit-input" data-task-edit-input>
 
   `;
 
   return createTaskItem;
 
 }
+
+
+const editTask = function () {
+  const taskTextElement = this.parentElement.querySelector(".item-text");
+  const editInput = this.parentElement.querySelector(".edit-input");
+  
+  // Hide the task text and display the input field
+  taskTextElement.style.display = "none";
+  editInput.style.display = "block";
+  editInput.value = taskTextElement.textContent;
+  editInput.focus();
+  
+  // Add an event listener to save changes on Enter key press
+  editInput.addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      taskTextElement.textContent = editInput.value;
+      taskTextElement.style.display = "block";
+      editInput.style.display = "none";
+    }
+  });
+}
+
 
 
 
@@ -253,6 +282,10 @@ const addTask = function () {
 
   // addEventListere to all taskItem checkbox and delete button
   addEventOnMultiElem(taskRemover, removeTask);
+
+  const taskEditBtns = document.querySelectorAll("[data-task-edit]");
+addEventOnMultiElem(taskEditBtns, editTask);
+
 
 }
 
