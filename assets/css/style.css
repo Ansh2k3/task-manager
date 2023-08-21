@@ -626,6 +626,21 @@ body.loaded{
   border-color: #0056b3; /* Change border color on hover */
 }
 
+
+/* CSS to style the completed task list */
+[data-completed-task-list] {
+    margin-top: 20px; /* Adjust margin as needed */
+  }
+  
+  [data-completed-task-list] .task-item {
+    /* Style for individual completed tasks */
+  }
+  
+  /* Hide completed task list by default */
+  [data-completed-task-list].hidden {
+    display: none;
+  }
+  
   
 
 .modal-btn{

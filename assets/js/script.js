@@ -257,14 +257,17 @@ const removeTask = function () {
     parentElement.classList.add("complete"); // add "complete" class on taskItem
     taskCompleteSound.play(); // play taskCompleteSound
 
-    setTimeout(function () {
-      parentElement.remove(); // remove taskItem
-      removeWelcomeNote(); // remove welcome note
-    }, 250);
+
+    //Fix this for a better ux
+
+    // setTimeout(function () {
+    //   parentElement.remove(); // remove taskItem
+    //   removeWelcomeNote(); // remove welcome note
+    // }, 250);
 
   } else {
-    parentElement.remove(); // remove taskItem
-    removeWelcomeNote(); // remove welcom note
+    // parentElement.remove(); // remove taskItem
+    // removeWelcomeNote(); // remove welcom note
   }
 
 }
