@@ -168,12 +168,18 @@ body.loaded{
 .app-box{
     position: relative;
     z-index: 1;
+    border-radius: 10px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -ms-border-radius: 10px;
+    -o-border-radius: 10px;
 }
 
 .header{
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
+    padding: 5px 15px;
 }
 
 .header-title{
@@ -209,6 +215,11 @@ body.loaded{
     overflow: hidden;
     z-index: 3;
     visibility: hidden;
+}
+
+.greeting {
+    display: flex;
+    gap: 15px;
 }
 
 .dropdown-container.active{
@@ -325,6 +336,10 @@ body.loaded{
     padding-inline-end: 4px;
     margin-inline-end: -4px;
     overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 1.5rem;
 }
 
 .task-list::-webkit-scrollbar{
@@ -669,4 +684,17 @@ responsive for larger than 768px screen
 
 }
 
+
+@keyframes rotate {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .rotate-sun {
+    animation: rotate 20s linear infinite; /* Adjust the duration and timing function as needed */
+  }
 
