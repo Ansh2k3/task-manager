@@ -146,6 +146,8 @@ body.loaded{
     padding-inline: 20px;
 }
 
+
+
 .container,
 .main,
 .app-box{
@@ -264,7 +266,7 @@ body.loaded{
     width: 100%;
     aspect-ratio: 1/1;
     outline: 2px solid transparent;
-    outline-offset: 2px;                   
+    outline-offset: 2px;
 }
 
 .theme-btn:is(:hover, :focus){

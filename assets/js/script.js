@@ -24,6 +24,9 @@ const taskCompleteSound = new Audio("./assets/sounds/task-complete.mp3");
 
 
 
+
+
+
 /**
  * convert weekday number to weekday name
  * totalParameter: 1;
@@ -167,13 +170,13 @@ const taskItemNode = function (taskText) {
 const editTask = function () {
   const taskTextElement = this.parentElement.querySelector(".item-text");
   const editInput = this.parentElement.querySelector(".edit-input");
-  
+
   // Hide the task text and display the input field
   taskTextElement.style.display = "none";
   editInput.style.display = "block";
   editInput.value = taskTextElement.textContent;
   editInput.focus();
-  
+
   // Add an event listener to save changes on Enter key press
   editInput.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
@@ -244,33 +247,29 @@ const removeWelcomeNote = function () {
  */
 
 const removeTask = function () {
-
-  // select clicked taskItem
   const parentElement = this.parentElement;
 
-  /**
-   * if the task is completed, the taskItem would be remove after 250ms
-   * if deleted than taskItem remove instant
-   */
   if (this.dataset.taskRemove === "complete") {
+    parentElement.classList.toggle("complete"); // Toggle "complete" class
+    taskCompleteSound.play();
+    saveData();
 
-    parentElement.classList.add("complete"); // add "complete" class on taskItem
-    taskCompleteSound.play(); // play taskCompleteSound
-
-
-    //Fix this for a better ux
-
-    // setTimeout(function () {
-    //   parentElement.remove(); // remove taskItem
-    //   removeWelcomeNote(); // remove welcome note
-    // }, 250);
-
+    // Move the completed task to the bottom
+    if (parentElement.classList.contains("complete")) {
+      taskList.appendChild(parentElement);
+    }
   } else {
-    // parentElement.remove(); // remove taskItem
-    // removeWelcomeNote(); // remove welcom note
+    // Check if it's an uncompleted task
+    if (!parentElement.classList.contains("complete")) {
+      taskList.insertBefore(parentElement, taskList.firstChild); // Move it to the top
+    }
+    parentElement.classList.toggle("complete"); // Toggle "complete" class
+    taskCompleteSound.play();
+    saveData();
   }
-
 }
+
+
 
 
 
@@ -287,7 +286,8 @@ const addTask = function () {
   addEventOnMultiElem(taskRemover, removeTask);
 
   const taskEditBtns = document.querySelectorAll("[data-task-edit]");
-addEventOnMultiElem(taskEditBtns, editTask);
+  addEventOnMultiElem(taskEditBtns, editTask);
+  saveData();
 
 
 }
@@ -330,6 +330,11 @@ window.addEventListener("load", function () {
 });
 
 
+function saveData() {
+  localStorage.setItem("data", taskList.innerHTML);
+}
+
+
 
 /**
  * change body background when click on any themeBtn
@@ -355,3 +360,15 @@ const themeChanger = function () {
 
 // add event on all themeBtns
 addEventOnMultiElem(themeBtns, themeChanger);
+
+function showTask() {
+  taskList.innerHTML = localStorage.getItem("data");
+  // Add event listeners to task items (checkboxes and delete buttons)
+  taskRemover = document.querySelectorAll("[data-task-remove]");
+  addEventOnMultiElem(taskRemover, removeTask);
+
+  const taskEditBtns = document.querySelectorAll("[data-task-edit]");
+  addEventOnMultiElem(taskEditBtns, editTask);
+}
+
+showTask();
