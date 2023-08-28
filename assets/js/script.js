@@ -253,12 +253,22 @@ const removeTask = function () {
     parentElement.classList.toggle("complete"); // Toggle "complete" class
     taskCompleteSound.play();
     saveData();
+
+    // Move the completed task to the bottom
+    if (parentElement.classList.contains("complete")) {
+      taskList.appendChild(parentElement);
+    }
   } else {
-    parentElement.remove(); // Remove the task item
-    removeWelcomeNote();
+    // Check if it's an uncompleted task
+    if (!parentElement.classList.contains("complete")) {
+      taskList.insertBefore(parentElement, taskList.firstChild); // Move it to the top
+    }
+    parentElement.classList.toggle("complete"); // Toggle "complete" class
+    taskCompleteSound.play();
     saveData();
   }
 }
+
 
 
 
