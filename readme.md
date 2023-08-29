@@ -13,7 +13,6 @@ TaskBuddy is a simple web-based task management application that helps you keep 
 - [Usage](#usage)
 - [Themes](#themes)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Features
 
