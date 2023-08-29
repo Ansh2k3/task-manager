@@ -263,8 +263,7 @@ const removeTask = function () {
     if (!parentElement.classList.contains("complete")) {
       taskList.insertBefore(parentElement, taskList.firstChild); // Move it to the top
     }
-    parentElement.classList.toggle("complete"); // Toggle "complete" class
-    taskCompleteSound.play();
+    parentElement.remove();
     saveData();
   }
 }
