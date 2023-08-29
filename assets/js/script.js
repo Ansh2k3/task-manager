@@ -136,7 +136,6 @@ const addEventOnMultiElem = function (elems, event) {
  */
 
 const taskItemNode = function (taskText) {
-
   const createTaskItem = document.createElement("li");
   createTaskItem.classList.add("task-item");
   createTaskItem.setAttribute("data-task-item", "");
@@ -146,25 +145,20 @@ const taskItemNode = function (taskText) {
     <button class="item-icon" data-task-remove="complete">
       <span class="check-icon"></span>
     </button>
-
     <p class="item-text">${taskText}</p>
-
     <button class="item-action-btn" aria-label="Edit task" data-task-edit>
       <ion-icon name="pencil-outline" aria-hidden="true"></ion-icon>
     </button>
-
     <button class="item-action-btn" aria-label="Remove task" data-task-remove>
       <ion-icon name="trash-outline" aria-hidden="true"></ion-icon>
     </button>
-
-
     <input type="text" class="edit-input" data-task-edit-input>
-
+    <button class="item-action-btn" style="display: none;">Save</button>
   `;
 
   return createTaskItem;
-
 }
+
 
 
 const editTask = function () {
@@ -177,15 +171,32 @@ const editTask = function () {
   editInput.value = taskTextElement.textContent;
   editInput.focus();
 
+  // Add a "Save" button
+  const saveButton = document.createElement("button");
+  saveButton.classList.add("item-action-btn");
+  saveButton.textContent = "Save";
+  saveButton.addEventListener("click", function () {
+    taskTextElement.textContent = editInput.value;
+    taskTextElement.style.display = "block";
+    editInput.style.display = "none";
+    this.remove(); // Remove the "Save" button after saving
+    saveData();
+  });
+
+  this.parentElement.appendChild(saveButton);
+
   // Add an event listener to save changes on Enter key press
   editInput.addEventListener("keypress", function (e) {
     if (e.key === "Enter") {
       taskTextElement.textContent = editInput.value;
       taskTextElement.style.display = "block";
       editInput.style.display = "none";
+      saveButton.remove(); // Remove the "Save" button after saving
+      saveData();
     }
   });
 }
+
 
 
 
@@ -198,32 +209,26 @@ const editTask = function () {
 
 const taskInputValidation = function (taskIsValid) {
   if (taskIsValid) {
+    // Create a new task item
+    const newTaskItem = taskItemNode(taskInput.value);
 
-    /**
-     * if there is an existing task
-     * then the new task will be added before it
-     */
-    if (taskList.childElementCount > 0) {
-      taskList.insertBefore(taskItemNode(taskInput.value), taskItem[0]);
-    } else {
-      taskList.appendChild(taskItemNode(taskInput.value));
-    }
+    // Insert the new task item at the beginning of the task list
+    taskList.insertBefore(newTaskItem, taskList.firstChild);
 
-    // after adding task on taskList, input field should be empty
+    // Clear the input field
     taskInput.value = "";
 
-    // hide the welcome note
+    // Hide the welcome note
     welcomeNote.classList.add("hide");
 
-    // update taskItem DOM selection
+    // Update taskItem DOM selection
     taskItem = document.querySelectorAll("[data-task-item]");
     taskRemover = document.querySelectorAll("[data-task-remove]");
-
   } else {
-    // if user pass any falsy value like(0, "", undefined, null, NaN)
-    console.log("Please write something!");
+    alert("Please write something!");
   }
 }
+
 
 
 
@@ -264,6 +269,7 @@ const removeTask = function () {
       taskList.insertBefore(parentElement, taskList.firstChild); // Move it to the top
     }
     parentElement.remove();
+    removeWelcomeNote();
     saveData();
   }
 }
@@ -368,6 +374,7 @@ function showTask() {
 
   const taskEditBtns = document.querySelectorAll("[data-task-edit]");
   addEventOnMultiElem(taskEditBtns, editTask);
+  removeWelcomeNote();
 }
 
 showTask();

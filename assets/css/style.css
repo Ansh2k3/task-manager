@@ -147,11 +147,10 @@ body.loaded{
 }
 
 
-
 .container,
 .main,
 .app-box{
-    height: 100%;
+    height: 85vh;
 }
 
 .h1,
@@ -441,6 +440,8 @@ body.loaded{
 
 }
 
+
+
 .task-item .item-text{
     font-size: var(--fs-4);
     padding-block-start: 2px;
@@ -713,6 +714,9 @@ responsive for larger than 768px screen
 
     .app-box{
         background-color: var(--white_10);
+        height: 110%;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
 
     .task-list{
